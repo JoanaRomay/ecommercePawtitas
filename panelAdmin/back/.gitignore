@@ -1,0 +1,51 @@
+# Node modules
+/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Directorios de dependencias
+.pnp
+.pnp.js
+
+# Directorio de producción
+/build
+/dist
+
+# Archivos de entorno (variables de entorno)
+.env
+.env.local
+.env.*.local
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# IDEs y editores (ejemplos comunes)
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Sequelize CLI archivo de metadatos (opcional)
+/sequelize-meta.js
+/sequelize-meta.json
+
+# Carpeta de pruebas (opcional, si no querés subirlas)
+/tests/
+
+# Otros
+*.bak
+*.swp

@@ -1,0 +1,159 @@
+/* Fondo global para todas las páginas */
+body {
+    background-color: #e4f1f0;
+}
+
+
+/**/
+.mySwiper {
+    width: 100%;
+    height: 75vh;
+    /* altura base en móviles */
+}
+
+/* Ajustes responsivos */
+@media (min-width: 768px) {
+    .mySwiper {
+        height: 80vh;
+    }
+}
+
+@media (min-width: 1024px) {
+    .mySwiper {
+        height: 90vh;
+    }
+}
+
+.swiper-slide {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    /* evita que la imagen se salga */
+}
+
+/* Contenedor principal del carrusel de ofertas */
+.ofertasSwiper {
+    width: 100%;
+    padding-bottom: 3rem;
+    /* espacio para paginación */
+    overflow: visible;
+    /* para que las flechas sobresalgan */
+    position: relative;
+    /* referencia para los absolute */
+}
+
+/* Cada slide */
+.ofertasSlide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Flechas */
+.ofertasSwiper .swiper-button-next,
+.ofertasSwiper .swiper-button-prev {
+    position: absolute;
+    top: 50%;
+    /* verticalmente al medio del contenedor */
+    transform: translateY(-50%);
+    z-index: 1000;
+    color: #1A535C;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Posición afuera del contenedor */
+.ofertasSwiper .swiper-button-prev {
+    left: 1rem;
+    /* afuera a la izquierda */
+}
+
+.ofertasSwiper .swiper-button-next {
+    right: 1rem;
+    /* afuera a la derecha */
+}
+
+/* Hover */
+.ofertasSwiper .swiper-button-next:hover,
+.ofertasSwiper .swiper-button-prev:hover {
+    background: #1A535C;
+    color: white;
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* Paginación */
+.ofertasSwiper .swiper-pagination-bullet {
+    background: #ccc;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.ofertasSwiper .swiper-pagination-bullet-active {
+    background: #FF6B6B;
+    width: 14px;
+    height: 14px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+
+    .ofertasSwiper .swiper-button-next,
+    .ofertasSwiper .swiper-button-prev {
+        width: 35px;
+        height: 35px;
+    }
+
+    .ofertasSwiper .swiper-button-prev {
+        left: -1rem;
+    }
+
+    .ofertasSwiper .swiper-button-next {
+        right: -1rem;
+    }
+}
+/*CARRUSEL MARCAS*/
+.scroll-container {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    width: 100vw;
+    background: white;
+    padding: 1rem 0;
+}
+
+.scroll-content {
+    display: flex;
+    flex-shrink: 0;
+    animation: scroll 20s linear infinite;
+}
+
+.logo {
+    flex: 0 0 auto;
+    padding: 0 1rem;
+}
+
+.logo img {
+    height: 60px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.1);
+}
+
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
