@@ -108,12 +108,13 @@ export default function Productos() {
           categoriaSeleccionada={categoriaSeleccionada}
           onCategoriaChange={setCategoriaSeleccionada}
           onBuscar={setBusqueda}
-                  onMascotaChange={setMascotasSeleccionadas} // ✅ recibe array de tipos activos
+                  onMascotaChange={setMascotasSeleccionadas} 
                   
         />
 
         {/* Productos */}
-              <div className="flex flex-wrap gap-8 w-full lg:w-[80%] mx-auto p-0">
+              <div className="flex flex-wrap justify-center gap-8 w-full lg:w-[80%] mx-auto p-0">
+
                   {productosPaginados.map((p) => {
             const imagenPrincipal = Array.isArray(p.imgUrl)
               ? p.imgUrl[0] || '/placeholder.webp'

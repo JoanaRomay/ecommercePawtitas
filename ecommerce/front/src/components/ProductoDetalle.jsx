@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import API from "../service/api";
 import { ShoppingCart, Heart, Share2, Minus, Plus, Truck, Clock, Globe } from "lucide-react";
 import toast from "react-hot-toast";
-;
 
 export default function ProductoDetalle() {
   const { id } = useParams();
@@ -94,18 +93,21 @@ export default function ProductoDetalle() {
   const precioFinal = Number(producto.precio) || 0;
 
   return (
-    <div className="min-h-screen p-8">
-      <div className="bg-white rounded-3xl w-full max-w-7xl mx-auto shadow-lg p-10 transition-all duration-300">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="flex gap-5">
-            <div className="flex flex-col gap-2 w-max">
+    <div className="min-h-screen p-4 sm:p-6 md:p-8">
+      <div className="bg-white rounded-2xl md:rounded-3xl w-full max-w-7xl mx-auto shadow-lg p-4 sm:p-6 md:p-10 transition-all duration-300">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+          
+          {/* SECCIÓN IMÁGENES - Mejorada para mobile */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* Miniaturas - Horizontal en mobile, vertical en desktop */}
+            <div className="flex sm:flex-col gap-2 order-2 sm:order-1 overflow-x-auto sm:overflow-x-visible pb-2 sm:pb-0">
               {imagenes.map((img, index) => (
                 <img
                   key={index}
                   src={`http://localhost:3000${img}`}
                   alt={`${producto.nombre} ${index + 1}`}
                   onClick={() => setMainImage(img)}
-                  className={`w-20 h-20 object-contain rounded-xl cursor-pointer border-2 shadow-sm transition-all duration-200 hover:scale-105 ${
+                  className={`w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-lg sm:rounded-xl cursor-pointer border-2 shadow-sm transition-all duration-200 hover:scale-105 flex-shrink-0 ${
                     mainImage === img
                       ? "border-teal-600 shadow-teal-100"
                       : "border-gray-200"
@@ -114,117 +116,131 @@ export default function ProductoDetalle() {
               ))}
             </div>
 
-            <div className="flex-1 flex justify-start items-start">
+            {/* Imagen principal - Centrada en mobile */}
+            <div className="flex-1 flex justify-center items-start order-1 sm:order-2">
               <img
                 src={`http://localhost:3000${mainImage}`}
                 alt={producto?.nombre || "Producto"}
-                className="w-96 h-96 md:w-[450px] md:h-[450px] rounded-2xl object-cover shadow-md transition-transform duration-300 hover:scale-105"
+                className="w-full max-w-sm sm:max-w-md md:w-96 md:h-96 lg:w-[450px] lg:h-[450px] rounded-xl md:rounded-2xl object-cover shadow-md transition-transform duration-300 hover:scale-105"
               />
             </div>
           </div>
 
-          <div className="flex flex-col justify-between">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">{producto.nombre}</h1>
-              <p className="text-4xl font-bold text-teal-600 mb-6">${precioFinal.toFixed(2)}</p>
-              <p className="text-gray-600 font-medium mb-8">
+          {/* SECCIÓN INFORMACIÓN - Mejorada para mobile */}
+          <div className="flex flex-col justify-between space-y-6 md:space-y-0">
+            <div className="space-y-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                {producto.nombre}
+              </h1>
+              <p className="text-3xl sm:text-4xl font-bold text-teal-600">${precioFinal.toFixed(2)}</p>
+              <p className="text-gray-600 font-medium">
                 <span className="text-gray-900 font-semibold">Stock disponible:</span> {producto.stock}
               </p>
             </div>
 
             <div className="space-y-6">
+              {/* Selector de cantidad */}
               <div className="flex items-center space-x-4">
-                <span className="text-lg font-medium text-gray-800">Cantidad:</span>
+                <span className="text-base sm:text-lg font-medium text-gray-800 whitespace-nowrap">Cantidad:</span>
                 <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden">
                   <button
                     onClick={decreaseQuantity}
-                    className="px-5 py-3 bg-gray-100 hover:bg-gray-200 font-bold text-lg transition-colors disabled:opacity-50"
+                    className="px-4 sm:px-5 py-2 sm:py-3 bg-gray-100 hover:bg-gray-200 font-bold text-lg transition-colors disabled:opacity-50"
                     disabled={quantity <= 1}
                   >
-                    <Minus className="w-5 h-5" />
+                    <Minus className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
-                  <span className="px-8 py-3 text-lg text-gray-800 font-semibold">{quantity}</span>
+                  <span className="px-4 sm:px-6 py-2 sm:py-3 text-base sm:text-lg text-gray-800 font-semibold min-w-[3rem] text-center">
+                    {quantity}
+                  </span>
                   <button
                     onClick={increaseQuantity}
-                    className="px-5 py-3 bg-gray-100 hover:bg-gray-200 font-bold text-lg transition-colors disabled:opacity-50"
+                    className="px-4 sm:px-5 py-2 sm:py-3 bg-gray-100 hover:bg-gray-200 font-bold text-lg transition-colors disabled:opacity-50"
                     disabled={quantity >= producto.stock}
                   >
-                    <Plus className="w-5 h-5" />
+                    <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4">
+              {/* Botones de acción */}
+              <div className="flex flex-wrap gap-3">
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-4 rounded-2xl text-lg flex items-center justify-center gap-3 shadow-md transition-transform duration-200 hover:scale-[1.02]"
+                  className="flex-1 min-w-[200px] bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 sm:py-4 rounded-xl md:rounded-2xl text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 shadow-md transition-transform duration-200 hover:scale-[1.02]"
                 >
-                  <ShoppingCart className="w-6 h-6" /> Agregar al carrito
+                  <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" /> 
+                  Agregar al carrito
                 </button>
 
-                <button className="bg-white border border-gray-300 rounded-2xl p-4 hover:bg-gray-100 transition-colors shadow-sm">
-                  <Heart className="w-6 h-6 text-teal-600" />
-                </button>
+                <div className="flex gap-2 sm:gap-3">
+                  <button className="bg-white border border-gray-300 rounded-xl md:rounded-2xl p-3 sm:p-4 hover:bg-gray-100 transition-colors shadow-sm">
+                    <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600" />
+                  </button>
 
-                <button className="bg-white border border-gray-300 rounded-2xl p-4 hover:bg-gray-100 transition-colors shadow-sm">
-                  <Share2 className="w-6 h-6 text-gray-700" />
-                </button>
+                  <button className="bg-white border border-gray-300 rounded-xl md:rounded-2xl p-3 sm:p-4 hover:bg-gray-100 transition-colors shadow-sm">
+                    <Share2 className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" />
+                  </button>
+                </div>
               </div>
 
-              <div className="mt-16 flex flex-col sm:flex-row sm:flex-wrap gap-4 text-gray-700 text-sm sm:text-base">
-                <div className="flex items-center gap-2">
-                  <Truck className="w-5 h-5 text-teal-600" />
-                  ¡Envío gratis en CABA y zonas de GBA* a partir de $33.000!
+              {/* Información de envío - Mejorada para mobile */}
+              <div className="mt-8 md:mt-16 space-y-3 text-gray-700 text-sm">
+                <div className="flex items-start gap-2">
+                  <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600 mt-0.5 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm">¡Envío gratis en CABA y zonas de GBA* a partir de $33.000!</span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-teal-600" />
-                  Recibí en el día en CABA y GBA (de lunes a viernes hasta las 12hs)
+                <div className="flex items-start gap-2">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600 mt-0.5 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm">Recibí en el día en CABA y GBA (de lunes a viernes hasta las 12hs)</span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-teal-600" />
-                  ¡Envíos a todo el país! Bonificados hasta 100% según zona y monto de compra
+                <div className="flex items-start gap-2">
+                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600 mt-0.5 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm">¡Envíos a todo el país! Bonificados hasta 100% según zona y monto de compra</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-gray-200 pt-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Descripción del producto</h2>
-          <p className="text-gray-700 text-lg leading-relaxed">{producto.descripcion}</p>
+        {/* Descripción del producto */}
+        <div className="mt-8 md:mt-12 border-t border-gray-200 pt-6 md:pt-8">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 md:mb-4">Descripción del producto</h2>
+          <p className="text-gray-700 text-base sm:text-lg leading-relaxed">{producto.descripcion}</p>
         </div>
 
-        <div className="mt-10 bg-gray-50 p-6 rounded-2xl shadow-inner border border-gray-100">
-          <h2 className="text-2xl font-semibold mb-5 text-gray-800">Preguntas y comentarios</h2>
+        {/* Preguntas y comentarios */}
+        <div className="mt-8 md:mt-10 bg-gray-50 p-4 sm:p-6 rounded-xl md:rounded-2xl shadow-inner border border-gray-100">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4 md:mb-5 text-gray-800">Preguntas y comentarios</h2>
 
           {mensajes.length === 0 ? (
             <p className="text-gray-500 text-sm">No hay mensajes todavía. Sé el primero en preguntar.</p>
           ) : (
-            <div className="space-y-3 max-h-64 overflow-y-auto pr-2">
+            <div className="space-y-3 max-h-48 sm:max-h-64 overflow-y-auto pr-2">
               {mensajes.map(mensaje => (
                 <div
                   key={mensaje.id}
-                  className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
+                  className="bg-white p-3 sm:p-4 rounded-lg md:rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
                 >
-                  <p className="text-gray-800">{mensaje.texto}</p>
+                  <p className="text-gray-800 text-sm sm:text-base">{mensaje.texto}</p>
                 </div>
               ))}
             </div>
           )}
 
-          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-3">
             <input
               type="text"
               value={nuevoMensaje}
               onChange={e => setNuevoMensaje(e.target.value)}
               placeholder="Escribí tu mensaje..."
-              className="flex-1 border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-600 text-gray-800"
+              className="flex-1 border border-gray-300 p-3 rounded-lg md:rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-600 text-gray-800 text-sm sm:text-base"
             />
             <button
               onClick={enviarMensaje}
-              className="bg-teal-600 text-white px-6 py-3 rounded-xl hover:bg-teal-700 transition-colors font-semibold"
+              className="bg-teal-600 text-white px-4 sm:px-6 py-3 rounded-lg md:rounded-xl hover:bg-teal-700 transition-colors font-semibold text-sm sm:text-base"
             >
               Enviar
             </button>
